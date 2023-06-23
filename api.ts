@@ -85,6 +85,43 @@ export interface HTTPValidationError {
     'detail'?: Array<ValidationError>;
 }
 /**
+ * HF predicted entity schema.  Will break for `none` token aggregation strategy.
+ * @export
+ * @interface KeywordEntity
+ */
+export interface KeywordEntity {
+    /**
+     * 
+     * @type {string}
+     * @memberof KeywordEntity
+     */
+    'entity_group': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof KeywordEntity
+     */
+    'score': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof KeywordEntity
+     */
+    'word': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof KeywordEntity
+     */
+    'start': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof KeywordEntity
+     */
+    'end': number;
+}
+/**
  * Payload for parse endpoint.
  * @export
  * @interface SearchQueryIn
@@ -105,17 +142,49 @@ export interface SearchQueryIn {
 export interface SearchQueryOut {
     /**
      * 
-     * @type {Array<GroundedEntity>}
+     * @type {Array<KeywordEntity>}
      * @memberof SearchQueryOut
      */
-    'entities': Array<GroundedEntity>;
+    'raw_entities': Array<KeywordEntity>;
+    /**
+     * 
+     * @type {GroundedEntity}
+     * @memberof SearchQueryOut
+     */
+    'term1': GroundedEntity;
+    /**
+     * 
+     * @type {GroundedEntity}
+     * @memberof SearchQueryOut
+     */
+    'term2'?: GroundedEntity;
     /**
      * 
      * @type {string}
      * @memberof SearchQueryOut
      */
     'population'?: string;
+    /**
+     * 
+     * @type {SemanticSearchType}
+     * @memberof SearchQueryOut
+     */
+    'search_type': SemanticSearchType;
 }
+/**
+ * Defines modes for semantic search.
+ * @export
+ * @enum {string}
+ */
+
+export enum SemanticSearchType {
+    RiskFactorOf = 'risk_factor_of',
+    Outcome = 'outcome',
+    Relationship = 'relationship',
+    Relationship2d = 'relationship_2d',
+    SingleVariable2d = 'single_variable_2d'
+}
+
 /**
  * 
  * @export
