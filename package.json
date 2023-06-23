@@ -1,14 +1,14 @@
 {
-  "name": "query-parser-system-api",
+  "name": "system-query-parser-api",
   "version": "1.0.0",
-  "description": "OpenAPI client for query-parser-system-api",
+  "description": "OpenAPI client for system-query-parser-api",
   "author": "OpenAPI-Generator Contributors",
   "keywords": [
     "axios",
     "typescript",
     "openapi-client",
     "openapi-generator",
-    "query-parser-system-api"
+    "system-query-parser-api"
   ],
   "license": "Unlicense",
   "main": "./dist/index.js",

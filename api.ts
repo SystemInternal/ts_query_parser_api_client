@@ -117,20 +117,6 @@ export interface SearchQueryOut {
     'population'?: string;
 }
 /**
- * Defines modes for semantic search.
- * @export
- * @enum {string}
- */
-
-export enum SemanticSearchType {
-    RiskFactorOf = 'risk_factor_of',
-    Outcome = 'outcome',
-    Relationship = 'relationship',
-    Relationship2d = 'relationship_2d',
-    SingleVariable2d = 'single_variable_2d'
-}
-
-/**
  * 
  * @export
  * @interface ValidationError
@@ -206,11 +192,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * Parse unstructured search.
          * @summary Parse Query
          * @param {SearchQueryIn} searchQueryIn 
-         * @param {SemanticSearchType} [ground] To ground entities or not.
+         * @param {boolean} [ground] To ground entities or not.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        parseQueryParsePost: async (searchQueryIn: SearchQueryIn, ground?: SemanticSearchType, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        parseQueryParsePost: async (searchQueryIn: SearchQueryIn, ground?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'searchQueryIn' is not null or undefined
             assertParamExists('parseQueryParsePost', 'searchQueryIn', searchQueryIn)
             const localVarPath = `/parse/`;
@@ -269,11 +255,11 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * Parse unstructured search.
          * @summary Parse Query
          * @param {SearchQueryIn} searchQueryIn 
-         * @param {SemanticSearchType} [ground] To ground entities or not.
+         * @param {boolean} [ground] To ground entities or not.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async parseQueryParsePost(searchQueryIn: SearchQueryIn, ground?: SemanticSearchType, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchQueryOut>> {
+        async parseQueryParsePost(searchQueryIn: SearchQueryIn, ground?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchQueryOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.parseQueryParsePost(searchQueryIn, ground, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -302,11 +288,11 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * Parse unstructured search.
          * @summary Parse Query
          * @param {SearchQueryIn} searchQueryIn 
-         * @param {SemanticSearchType} [ground] To ground entities or not.
+         * @param {boolean} [ground] To ground entities or not.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        parseQueryParsePost(searchQueryIn: SearchQueryIn, ground?: SemanticSearchType, options?: any): AxiosPromise<SearchQueryOut> {
+        parseQueryParsePost(searchQueryIn: SearchQueryIn, ground?: boolean, options?: any): AxiosPromise<SearchQueryOut> {
             return localVarFp.parseQueryParsePost(searchQueryIn, ground, options).then((request) => request(axios, basePath));
         },
     };
@@ -348,10 +334,10 @@ export interface DefaultApiParseQueryParsePostRequest {
 
     /**
      * To ground entities or not.
-     * @type {SemanticSearchType}
+     * @type {boolean}
      * @memberof DefaultApiParseQueryParsePost
      */
-    readonly ground?: SemanticSearchType
+    readonly ground?: boolean
 }
 
 /**
