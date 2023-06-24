@@ -85,43 +85,6 @@ export interface HTTPValidationError {
     'detail'?: Array<ValidationError>;
 }
 /**
- * HF predicted entity schema.  Will break for `none` token aggregation strategy.
- * @export
- * @interface KeywordEntity
- */
-export interface KeywordEntity {
-    /**
-     * 
-     * @type {string}
-     * @memberof KeywordEntity
-     */
-    'entity_group': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof KeywordEntity
-     */
-    'score': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof KeywordEntity
-     */
-    'word': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof KeywordEntity
-     */
-    'start': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof KeywordEntity
-     */
-    'end': number;
-}
-/**
  * Payload for parse endpoint.
  * @export
  * @interface SearchQueryIn
@@ -132,7 +95,13 @@ export interface SearchQueryIn {
      * @type {string}
      * @memberof SearchQueryIn
      */
-    'raw_query': string;
+    'term1': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SearchQueryIn
+     */
+    'term2'?: string;
 }
 /**
  * Response for parse endpoint.
@@ -142,34 +111,10 @@ export interface SearchQueryIn {
 export interface SearchQueryOut {
     /**
      * 
-     * @type {Array<KeywordEntity>}
+     * @type {Array<GroundedEntity>}
      * @memberof SearchQueryOut
      */
-    'raw_entities': Array<KeywordEntity>;
-    /**
-     * 
-     * @type {GroundedEntity}
-     * @memberof SearchQueryOut
-     */
-    'term1': GroundedEntity;
-    /**
-     * 
-     * @type {GroundedEntity}
-     * @memberof SearchQueryOut
-     */
-    'term2'?: GroundedEntity;
-    /**
-     * 
-     * @type {string}
-     * @memberof SearchQueryOut
-     */
-    'population'?: string;
-    /**
-     * 
-     * @type {SemanticSearchType}
-     * @memberof SearchQueryOut
-     */
-    'search_type': SemanticSearchType;
+    'entities': Array<GroundedEntity>;
 }
 /**
  * Defines modes for semantic search.
@@ -261,11 +206,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * Parse unstructured search.
          * @summary Parse Query
          * @param {SearchQueryIn} searchQueryIn 
-         * @param {boolean} [ground] To ground entities or not.
+         * @param {SemanticSearchType} [ground] To ground entities or not.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        parseQueryParsePost: async (searchQueryIn: SearchQueryIn, ground?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        parseQueryParsePost: async (searchQueryIn: SearchQueryIn, ground?: SemanticSearchType, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'searchQueryIn' is not null or undefined
             assertParamExists('parseQueryParsePost', 'searchQueryIn', searchQueryIn)
             const localVarPath = `/parse/`;
@@ -324,11 +269,11 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * Parse unstructured search.
          * @summary Parse Query
          * @param {SearchQueryIn} searchQueryIn 
-         * @param {boolean} [ground] To ground entities or not.
+         * @param {SemanticSearchType} [ground] To ground entities or not.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async parseQueryParsePost(searchQueryIn: SearchQueryIn, ground?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchQueryOut>> {
+        async parseQueryParsePost(searchQueryIn: SearchQueryIn, ground?: SemanticSearchType, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchQueryOut>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.parseQueryParsePost(searchQueryIn, ground, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -357,11 +302,11 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * Parse unstructured search.
          * @summary Parse Query
          * @param {SearchQueryIn} searchQueryIn 
-         * @param {boolean} [ground] To ground entities or not.
+         * @param {SemanticSearchType} [ground] To ground entities or not.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        parseQueryParsePost(searchQueryIn: SearchQueryIn, ground?: boolean, options?: any): AxiosPromise<SearchQueryOut> {
+        parseQueryParsePost(searchQueryIn: SearchQueryIn, ground?: SemanticSearchType, options?: any): AxiosPromise<SearchQueryOut> {
             return localVarFp.parseQueryParsePost(searchQueryIn, ground, options).then((request) => request(axios, basePath));
         },
     };
@@ -403,10 +348,10 @@ export interface DefaultApiParseQueryParsePostRequest {
 
     /**
      * To ground entities or not.
-     * @type {boolean}
+     * @type {SemanticSearchType}
      * @memberof DefaultApiParseQueryParsePost
      */
-    readonly ground?: boolean
+    readonly ground?: SemanticSearchType
 }
 
 /**
