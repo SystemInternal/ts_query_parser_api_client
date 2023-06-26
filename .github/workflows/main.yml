@@ -16,5 +16,6 @@ jobs:
     - name: Run semantic release
       run: |
         npm install @semantic-release/commit-analyzer
+        npm install @semantic-release/git
         npm install @semantic-release/github
         npx semantic-release
