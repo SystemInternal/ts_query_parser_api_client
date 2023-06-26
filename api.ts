@@ -268,7 +268,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         parseQueryParsePost: async (searchQueryIn: SearchQueryIn, ground?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'searchQueryIn' is not null or undefined
             assertParamExists('parseQueryParsePost', 'searchQueryIn', searchQueryIn)
-            const localVarPath = `/parse/`;
+            const localVarPath = `/parse`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
