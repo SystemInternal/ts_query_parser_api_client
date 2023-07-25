@@ -18,6 +18,9 @@
     "prepare": "npm run build"
   },
   "dependencies": {
+    "@semantic-release/commit-analyzer": "^10.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.0.4",
     "axios": "^0.21.4"
   },
   "devDependencies": {
